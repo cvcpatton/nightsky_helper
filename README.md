@@ -26,5 +26,5 @@ python nightsky.py
 ```  
 
 **License**  
-... 
+MIT License, Copyright (c) 2025 Catherine Patton  
 
