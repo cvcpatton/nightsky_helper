@@ -22,7 +22,10 @@ In process, September 2025 (capstone project due 12/7/25).
 * Modification for other location coordinates (this program defaults to Denver, Colorado, USA coordinates)  
 * Weather API integration to check for cloud cover or precipitation  
 * Moon phase/brightness that might interfere with viewing objects  
-* Add a calendar of known celestial events such as meteor showers for additional results output  
+* Add a calendar of known celestial events such as meteor showers for additional results output
+
+**Sample Output**  
+![Sample Output](nightsky_helper_output.jpg "Sample Output")
 
 **How to Run**  
 
