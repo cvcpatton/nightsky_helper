@@ -17,6 +17,13 @@ In process, September 2025 (capstone project due 12/7/25).
 * Allows saving results to a CSV log for multi-day trip planning  
 * Menu-driven interface with loops and input validation  
 
+**Potential Upgrades**  
+
+* Modification for other location coordinates (this program defaults to Denver, Colorado, USA coordinates)  
+* Weather API integration to check for cloud cover or precipitation  
+* Moon phase/brightness that might interfere with viewing objects  
+* Add a calendar of known celestial events such as meteor showers for additional results output  
+
 **How to Run**  
 
 ```bash  
