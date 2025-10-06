@@ -38,3 +38,4 @@ python nightsky.py
 **License**  
 MIT License, Copyright (c) 2025 Catherine Patton  
 
+This project was created as part of my programming coursework. Please do not reproduce or distribute without proper credit. For questions about use, contact me.
