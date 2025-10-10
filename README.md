@@ -15,7 +15,12 @@ In process, September 2025 (capstone project due 12/7/25).
 * Computes sunset, dark sky, and sunrise times for Denver coordinates  
 * Identifies visible planets and stars for chosen dates  
 * Allows saving results to a CSV log for multi-day trip planning  
-* Menu-driven interface with loops and input validation  
+* Menu-driven interface with loops and input validation
+
+**Versions**  
+
+*  
+*  
 
 **Potential Upgrades**  
 
