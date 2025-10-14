@@ -19,8 +19,8 @@ In process, September 2025 (capstone project due 12/7/25).
 
 **Versions**  
 
-*  Basic version to run the program in console, available now (Oct 2025)
-*  
+* Basic version to run the program in console, available now (Oct 2025)
+* Full version using OOP and web scraping moon phases coming Dec 2025
 
 **Potential Upgrades**  
 
