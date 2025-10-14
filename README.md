@@ -19,7 +19,7 @@ In process, September 2025 (capstone project due 12/7/25).
 
 **Versions**  
 
-*  
+*  Basic version to run the program in console, available now (Oct 2025)
 *  
 
 **Potential Upgrades**  
