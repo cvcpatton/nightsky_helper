@@ -37,7 +37,7 @@ In process, October 2025 (capstone project due 12/7/25).
 ```bash  
 git clone https://github.com/cvcpatton/nightsky-helper.git  
 cd nightsky-helper  
-python nightsky.py  
+python nightsky-basic.py  
 ```  
 
 **License**  
