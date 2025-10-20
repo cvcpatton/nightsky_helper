@@ -1,7 +1,7 @@
 # Denver Nightsky Helper (Python, In Progress, Fall 2025)
 Python program using Skyfield (library) to calculate stargazing times and visible celestial objects with CSV export for the Denver area.  
 
-In process, September 2025 (capstone project due 12/7/25).  
+In process, October 2025 (capstone project due 12/7/25).  
 
 **Tech Stack**  
 
