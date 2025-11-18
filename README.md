@@ -32,6 +32,9 @@ In process, October 2025 (capstone project due 12/7/25).
 **Sample Output**  
 ![Sample Output](nightsky_helper_output.jpg "Sample Output")
 
+**External Data Source**  
+[Moon Illumination Data Source: isaacbernat](https://raw.githubusercontent.com/isaacbernat/moon-data/main/moon_phases_UTC_1800-2050.csv)  
+
 **Instructor Feedback**  
 "Your Nightsky Helper demonstrates excellent understanding of modular program design, function documentation, and file handling. Each core function is clearly written, properly commented, and performs a distinct, single purpose. The program structure and pseudocode flow logically from user input to output, and your testing functions show thoughtful attention to verifying correctness. This submission is organized, user-friendly, and demonstrates both technical and creative strength. Excellent job."  
 
