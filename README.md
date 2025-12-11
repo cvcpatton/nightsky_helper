@@ -38,6 +38,8 @@ In process, October 2025 (capstone project due 12/7/25).
 **Instructor Feedback**  
 "Your Nightsky Helper demonstrates excellent understanding of modular program design, function documentation, and file handling. Each core function is clearly written, properly commented, and performs a distinct, single purpose. The program structure and pseudocode flow logically from user input to output, and your testing functions show thoughtful attention to verifying correctness. This submission is organized, user-friendly, and demonstrates both technical and creative strength. Excellent job."  
 
+Final project feedback: "Your final project is outstanding and shows a very high level of technical depth and creativity ... The separation of concerns across multiple modules shows excellent Python engineering practice. This is a highly polished project that demonstrates advanced problem solving skills, real world relevance, and strong mastery of external libraries."
+
 **How to Run**  
 
 ```bash  
