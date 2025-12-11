@@ -1,4 +1,4 @@
-Modular Layout (7 files):
+Modular Layout (8 files):
 
 nightsky_helper/nightsky-oop/
 |
@@ -8,4 +8,5 @@ nightsky_helper/nightsky-oop/
 |-- celestial_objects.py       Planet/star definitions
 |-- location.py                Location and timezone handling ... Location class
 |-- models.py                  Data classes for Observation, Location ... Observation class
+|-- moon.py                    Web scraping moon illumination data
 |-- utils.py                   Helpers (formatting, datetime, etc.)
