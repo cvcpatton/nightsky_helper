@@ -46,7 +46,8 @@ Final project feedback: "Your final project is outstanding and shows a very high
 git clone https://github.com/cvcpatton/nightsky-helper.git  
 cd nightsky-helper  
 python nightsky-basic.py  
-```  
+```
+"Advanced" version instructions are in the README file in the nightsky-oop folder. 
 
 **License**  
 MIT License, Copyright (c) 2025 Catherine Patton  
