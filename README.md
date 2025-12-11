@@ -1,7 +1,6 @@
-# Denver Nightsky Helper (Python, In Progress, Fall 2025)
+# Denver Nightsky Helper (Python, December 2025)
 Python program using Skyfield (library) to calculate stargazing times and visible celestial objects with CSV export for the Denver area.  
 
-In process, October 2025 (capstone project due 12/7/25).  
 
 **Tech Stack**  
 
@@ -16,11 +15,12 @@ In process, October 2025 (capstone project due 12/7/25).
 * Identifies visible planets and stars for chosen dates  
 * Allows saving results to a CSV log for multi-day trip planning  
 * Menu-driven interface with loops and input validation
+* Web scraping moon illumination data (advanced version)
 
 **Versions**  
 
 * Basic version to run the program in console, available now (Oct 2025) ⬅️
-* Full version using OOP and web scraping moon phases coming Dec 2025
+* Full version using OOP and web scraping moon phases (Dec 2025)
 
 **Potential Upgrades**  
 
