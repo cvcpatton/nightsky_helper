@@ -1,1 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NightSky Helper</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>NightSky Helper</h1>
+    <p>Choose a date to see stargazing conditions.</p>
+
+    <form method="POST" action="/results">
+      <label for="date">Observation Date</label>
+      <input type="date" id="date" name="date" required>
+
+      <button type="submit">Check the Sky</button>
+    </form>
+
+    <div class="footer">
+      <a href="https://github.com/cvcpatton" target="new">By Cathy Patton (GitHub link)</a>
+    </div>
+  </div>
+</body>
+</html>
 
