@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from models import db, Observation
+from output import db, Observation
 from sky_calculator import SkyCalculator
 
 app = Flask(__name__)
