@@ -6,6 +6,7 @@ from skyfield.api import load, Star, Topos
 from skyfield.almanac import find_discrete, dark_twilight_day
 from datetime import datetime, timedelta
 import pytz
+from pytz import UTC
 from models import Observation
 from celestial_objects import CELESTIAL_OBJECTS, PLANET_MAP, STAR_COORDS
 from location import DENVER, to_utc, format_time
@@ -16,7 +17,7 @@ class SkyCalculator:
     def __init__(self):
         self.eph = load('de421.bsp')
         self.ts = load.timescale()
-        self.tz = timezone('America/Denver')
+        self.tz = pytz.timezone('America/Denver')
         self.observer = DENVER
 
     def calculate(self, obs_date: datetime.date) -> Observation:
@@ -75,4 +76,5 @@ class SkyCalculator:
             moon_illum=moon_illum
 
         )
+
 
