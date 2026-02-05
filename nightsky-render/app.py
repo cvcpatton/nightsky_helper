@@ -17,6 +17,13 @@ with app.app_context():
     db.create_all()
 
 
+@app.route("/")
+def index():
+    return {
+        "service": "NightSky Helper API",
+        "status": "running"
+    }
+    
 @app.route("/api/observations", methods=["GET"])
 def get_observations():
     observations = Observation.query.all()
