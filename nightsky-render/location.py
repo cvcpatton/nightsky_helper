@@ -30,10 +30,10 @@ class Denver(Location):
 # Singleton Denver instance for simplicity
 DENVER = Denver()
 
+def to_utc(local_dt):
+    # Convert localized datetime to UTC
+    return DENVER.tz.localize(local_dt).astimezone(pytz.utc)
+
 def format_time(dt):
-    # Format an already-localized datetime for display.
-    if not dt:
-        return "Unavailable"
-
-    return dt.strftime("%-I:%M %p")
-
+    # Formatted time for clean output (12-hour format with AM/PM and no leading zeroes)
+    return dt.strftime("%I:%M %p").lstrip("0") if dt else "Unavailable"
