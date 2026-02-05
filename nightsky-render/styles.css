@@ -30,7 +30,7 @@ h1, h2 {
 }
 
 a {
-  color: inherit;       /* inherit from parent (body) */
+  color: #f4f3ee;      
 }
 
 label {
