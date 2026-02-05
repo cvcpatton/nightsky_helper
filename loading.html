@@ -79,20 +79,24 @@
     By Cathy Patton (<a href="https://cvcpatton.github.io/index.html" target="_blank">Portfolio</a>)
   </footer>
 
-  <script>
-    // Render URL
-    const appUrl = "https://nightsky-helper.onrender.com/";
+<script>
+  // Wake the backend
+  const wakeUrl = "https://nightsky-helper.onrender.com/";
 
-    async function checkApp() {
-      try {
-        const res = await fetch(appUrl, { mode: "no-cors" });
-        window.location.href = appUrl; // Redirect when available
-      } catch {
-        setTimeout(checkApp, 3000); // Retry every 3 seconds
-      }
+  // Actual frontend page
+  const frontendUrl = "https://cvcpatton.github.io/nightsky_helper/nightsky-render/index.html";
+
+  async function checkApp() {
+    try {
+      await fetch(wakeUrl, { mode: "no-cors" });
+      window.location.href = frontendUrl;
+    } catch {
+      setTimeout(checkApp, 3000);
     }
+  }
 
-    checkApp();
-  </script>
+  checkApp();
+</script>
+
 </body>
 </html>
