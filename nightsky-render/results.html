@@ -60,38 +60,35 @@
     </form>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const container = document.getElementById("resultContainer");
-      const obs = JSON.parse(localStorage.getItem("latestObservation"));
+  <script>document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("resultContainer");
+  const obs = JSON.parse(localStorage.getItem("latestObservation"));
 
-      if (!obs || obs.length === 0) {
-        container.innerHTML = "<p>No observation data found.</p>";
-        return;
-      }
+  if (!obs) {
+    container.innerHTML = "<p>No observation data found.</p>";
+    return;
+  }
 
-      // Use first observation
-      const o = obs[0];
+  // obs is a single object now
+  container.innerHTML = `
+    <h2>Observation for ${obs.date}</h2>
+    <p><strong>Sunset:</strong> ${obs.sunset}</p>
+    <p><strong>Dark Sky Begins:</strong> ${obs.dark_sky}</p>
+    <p><strong>Sunrise:</strong> ${obs.sunrise}</p>
+    <p><strong>Moon Illumination:</strong> ${obs.moon_illum}</p>
 
-      // Build HTML dynamically
-      container.innerHTML = `
-        <h2>Observation for ${o.date}</h2>
-        <p><strong>Sunset:</strong> ${o.sunset}</p>
-        <p><strong>Dark Sky Begins:</strong> ${o.dark_sky}</p>
-        <p><strong>Sunrise:</strong> ${o.sunrise}</p>
-        <p><strong>Moon Illumination:</strong> ${o.moon_illum}</p>
+    <h3>Visible Planets</h3>
+    ${obs.planets && obs.planets.length > 0 ? 
+      `<ul>${obs.planets.map(p => `<li>${p}</li>`).join('')}</ul>` : 
+      '<p>None visible</p>'}
 
-        <h3>Visible Planets</h3>
-        ${o.planets && o.planets.length > 0 ? 
-          `<ul>${o.planets.map(p => `<li>${p}</li>`).join('')}</ul>` : 
-          '<p>None visible</p>'}
+    <h3>Notable Stars</h3>
+    ${obs.stars && obs.stars.length > 0 ? 
+      `<ul>${obs.stars.map(s => `<li>${s}</li>`).join('')}</ul>` : 
+      '<p>No prominent stars listed</p>'}
+  `;
+});
 
-        <h3>Notable Stars</h3>
-        ${o.stars && o.stars.length > 0 ? 
-          `<ul>${o.stars.map(s => `<li>${s}</li>`).join('')}</ul>` : 
-          '<p>No prominent stars listed</p>'}
-      `;
-    });
   </script>
 </body>
 </html>
