@@ -25,10 +25,12 @@ class SkyCalculator:
 
         observer_loc = self.eph['earth'] + self.observer.topos
 
-        # Set up two time points for event search: noon of the observation day and 2 days later
-        local_noon = datetime(obs_date.year, obs_date.month, obs_date.day, 12)
-        t0 = self.ts.utc(to_utc(local_noon))
-        t1 = self.ts.utc(to_utc(local_noon + timedelta(days=2)))
+        # Set up two time points for event search: noon of the observation day and 2 days later, explicitly localize to Denver time first
+        local_noon = self.tz.localize(
+            datetime(obs_date.year, obs_date.month, obs_date.day, 12)
+        )
+        t0 = self.ts.utc(local_noon.astimezone(pytz.utc))
+        t1 = self.ts.utc((local_noon + timedelta(days=2)).astimezone(pytz.utc))
 
         # Use Skyfield's dark_twilight_day() function to find sunset, darkness, and sunrise events
         f = dark_twilight_day(self.eph, self.observer.topos)
@@ -76,5 +78,6 @@ class SkyCalculator:
             moon_illum=moon_illum
 
         )
+
 
 
