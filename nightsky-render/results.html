@@ -1,69 +1,97 @@
 <!DOCTYPE html>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const resultContainer = document.getElementById("resultContainer");
-  const obs = JSON.parse(localStorage.getItem("latestObservation"));
-
-  if (!obs || obs.length === 0) {
-    resultContainer.innerHTML = "<p>No observation data found.</p>";
-    return;
-  }
-
-  // Example: display the first observation
-  const firstObs = obs[0];
-  resultContainer.innerHTML = `
-    <h2>Observation for ${firstObs.date}</h2>
-    <p>Sunset: ${firstObs.sunset}</p>
-    <p>Dark sky starts: ${firstObs.dark_sky}</p>
-    <p>Sunrise: ${firstObs.sunrise}</p>
-    <p>Planets visible: ${firstObs.planets.join(", ")}</p>
-    <p>Stars: ${firstObs.stars.join(", ")}</p>
-    <p>Moon illumination: ${firstObs.moon_illum}</p>
-  `;
-});
-</script>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Observation Results</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background-color: #003049;
+      color: #f4f3ee;
+      margin: 0;
+      padding: 2rem;
+    }
 
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background-color: #004466; /* slightly lighter container */
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    h2, h3 {
+      color: #f4f3ee;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: 1.5rem;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #003049;
+      color: #f4f3ee;
+      border: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+
+    button:hover {
+      background-color: #004466;
+    }
+  </style>
+</head>
 <body>
   <div class="container">
-    <h2>Observation for {{ observation.date }}</h2>
+    <div id="resultContainer">
+      <!-- Observation details will be inserted here by JS -->
+    </div>
 
-    <p><strong>Sunset:</strong> {{ observation.sunset }}</p>
-    <p><strong>Dark Sky Begins:</strong> {{ observation.dark_sky }}</p>
-    <p><strong>Sunrise:</strong> {{ observation.sunrise }}</p>
-    <p><strong>Moon Illumination:</strong> {{ observation.moon_illum }}</p>
-
-    <h3>Visible Planets</h3>
-    {% if observation.planets %}
-      <ul>
-        {% for planet in observation.planets %}
-          <li>{{ planet }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>None visible</p>
-    {% endif %}
-
-    <h3>Notable Stars</h3>
-    {% if observation.stars %}
-      <ul>
-        {% for star in observation.stars %}
-          <li>{{ star }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No prominent stars listed</p>
-    {% endif %}
-
-    <form action="/" method="GET">
+    <form action="index.html" method="GET">
       <button type="submit">Check Another Date</button>
     </form>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.getElementById("resultContainer");
+      const obs = JSON.parse(localStorage.getItem("latestObservation"));
+
+      if (!obs || obs.length === 0) {
+        container.innerHTML = "<p>No observation data found.</p>";
+        return;
+      }
+
+      // Use first observation
+      const o = obs[0];
+
+      // Build HTML dynamically
+      container.innerHTML = `
+        <h2>Observation for ${o.date}</h2>
+        <p><strong>Sunset:</strong> ${o.sunset}</p>
+        <p><strong>Dark Sky Begins:</strong> ${o.dark_sky}</p>
+        <p><strong>Sunrise:</strong> ${o.sunrise}</p>
+        <p><strong>Moon Illumination:</strong> ${o.moon_illum}</p>
+
+        <h3>Visible Planets</h3>
+        ${o.planets && o.planets.length > 0 ? 
+          `<ul>${o.planets.map(p => `<li>${p}</li>`).join('')}</ul>` : 
+          '<p>None visible</p>'}
+
+        <h3>Notable Stars</h3>
+        ${o.stars && o.stars.length > 0 ? 
+          `<ul>${o.stars.map(s => `<li>${s}</li>`).join('')}</ul>` : 
+          '<p>No prominent stars listed</p>'}
+      `;
+    });
+  </script>
 </body>
 </html>
