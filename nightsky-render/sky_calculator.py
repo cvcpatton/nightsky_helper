@@ -16,6 +16,7 @@ class SkyCalculator:
     def __init__(self):
         self.eph = load('de421.bsp')
         self.ts = load.timescale()
+        self.tz = timezone('America/Denver')
         self.observer = DENVER
 
     def calculate(self, obs_date: datetime.date) -> Observation:
@@ -33,8 +34,8 @@ class SkyCalculator:
         times, events = find_discrete(t0, t1, f)
 
         # Create a list of (event_type, local_time) tuples for easier filtering
-        event_log = [(e, self.observer.tz.normalize(
-            t.utc_datetime().replace(tzinfo=pytz.utc).astimezone(self.observer.tz)
+        event_log = [(e, t.utc_datetime().replace(tzinfo=UTC).astimezone(self.tz)) 
+             for t, e in zip(times, events)]
         )) for t, e in zip(times, events)]
 
         # Identify sunset, dark_sky, and sunrise on the observation date
@@ -71,4 +72,5 @@ class SkyCalculator:
             planets=visible_planets,
             stars=visible_stars,
             moon_illum=moon_illum
+
         )
