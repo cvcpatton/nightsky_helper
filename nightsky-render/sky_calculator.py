@@ -34,7 +34,7 @@ class SkyCalculator:
 
         # Create a list of (event_type, local_time) tuples for easier filtering
         event_log = [(e, self.observer.tz.normalize(
-            t.utc_datetime().replace(tzinfo=pytz.utc).astimezone(self.observer.tz)
+            t.utc_datetime().astimezone(self.observer.tz)
         )) for t, e in zip(times, events)]
 
         # Identify sunset, dark_sky, and sunrise on the observation date
@@ -72,3 +72,4 @@ class SkyCalculator:
             stars=visible_stars,
             moon_illum=moon_illum
         )
+
