@@ -38,7 +38,14 @@ class SkyCalculator:
 
         # Create a list of (event_type, local_time) tuples for easier filtering
         event_log = [
-            (e, t.utc_datetime().replace(tzinfo=pytz.utc).astimezone(self.tz))
+            (
+                e,
+                self.tz.normalize(
+                    t.utc_datetime()
+                     .replace(tzinfo=pytz.utc)
+                     .astimezone(self.tz)
+                )
+            )
             for t, e in zip(times, events)
         ]
 
@@ -82,6 +89,7 @@ class SkyCalculator:
             moon_illum=moon_illum
 
         )
+
 
 
 
