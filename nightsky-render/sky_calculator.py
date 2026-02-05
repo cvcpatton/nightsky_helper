@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 import pytz
 from models import Observation
 from celestial_objects import CELESTIAL_OBJECTS, PLANET_MAP, STAR_COORDS
-from location import DENVER, to_utc, format_time
+from location import DENVER, format_time
 from moon import get_moon_illumination
 
 class SkyCalculator:
@@ -82,6 +82,7 @@ class SkyCalculator:
             moon_illum=moon_illum
 
         )
+
 
 
 
