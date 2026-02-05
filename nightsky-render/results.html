@@ -1,10 +1,35 @@
 <!DOCTYPE html>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const resultContainer = document.getElementById("resultContainer");
+  const obs = JSON.parse(localStorage.getItem("latestObservation"));
+
+  if (!obs || obs.length === 0) {
+    resultContainer.innerHTML = "<p>No observation data found.</p>";
+    return;
+  }
+
+  // Example: display the first observation
+  const firstObs = obs[0];
+  resultContainer.innerHTML = `
+    <h2>Observation for ${firstObs.date}</h2>
+    <p>Sunset: ${firstObs.sunset}</p>
+    <p>Dark sky starts: ${firstObs.dark_sky}</p>
+    <p>Sunrise: ${firstObs.sunrise}</p>
+    <p>Planets visible: ${firstObs.planets.join(", ")}</p>
+    <p>Stars: ${firstObs.stars.join(", ")}</p>
+    <p>Moon illumination: ${firstObs.moon_illum}</p>
+  `;
+});
+</script>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Observation Results</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
   <div class="container">
     <h2>Observation for {{ observation.date }}</h2>
