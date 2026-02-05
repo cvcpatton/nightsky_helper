@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Observation Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>Observation for {{ observation.date }}</h2>
+
+    <p><strong>Sunset:</strong> {{ observation.sunset }}</p>
+    <p><strong>Dark Sky Begins:</strong> {{ observation.dark_sky }}</p>
+    <p><strong>Sunrise:</strong> {{ observation.sunrise }}</p>
+    <p><strong>Moon Illumination:</strong> {{ observation.moon_illum }}</p>
+
+    <h3>Visible Planets</h3>
+    {% if observation.planets %}
+      <ul>
+        {% for planet in observation.planets %}
+          <li>{{ planet }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>None visible</p>
+    {% endif %}
+
+    <h3>Notable Stars</h3>
+    {% if observation.stars %}
+      <ul>
+        {% for star in observation.stars %}
+          <li>{{ star }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No prominent stars listed</p>
+    {% endif %}
+
+    <form action="/" method="GET">
+      <button type="submit">Check Another Date</button>
+    </form>
+  </div>
+</body>
+</html>
