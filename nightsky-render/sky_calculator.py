@@ -33,14 +33,16 @@ class SkyCalculator:
         times, events = find_discrete(t0, t1, f)
 
         # Create a list of (event_type, local_time) tuples for easier filtering
-        event_log = [(e, self.observer.tz.normalize(
-            t.utc_datetime().astimezone(self.observer.tz)
-        )) for t, e in zip(times, events)]
+        event_log = [(e, t.utc_datetime().astimezone(self.observer.tz)) for t, e in zip(times, events)]
 
-        # Identify sunset, dark_sky, and sunrise on the observation date
-        sunset = next((lt for e, lt in reversed(event_log) if e == 1 and lt.date() == obs_date), None)
-        dark_start = next((lt for e, lt in event_log if e == 0 and sunset and lt > sunset and lt.date() == obs_date), None)
-        sunrise = next((lt for e, lt in event_log if e == 3 and lt.date() == obs_date + timedelta(days=1)), None)
+        # Pick the sunset closest to local noon
+        sunset = min((lt for e, lt in event_log if e == 1), key=lambda lt: abs(lt - local_noon))
+
+        # Pick the dark_sky (astronomical twilight) **after sunset**
+        dark_start = min((lt for e, lt in event_log if e == 0 and lt > sunset), key=lambda lt: lt - sunset)
+
+        # Pick sunrise the next day
+        sunrise = min((lt for e, lt in event_log if e == 3 and lt > sunset), key=lambda lt: lt - sunset)
 
         # Define the time for checking visibility: 10:00 PM local time on the observation date
         t_night = self.ts.utc(to_utc(datetime(obs_date.year, obs_date.month, obs_date.day, 22)))
@@ -72,4 +74,5 @@ class SkyCalculator:
             stars=visible_stars,
             moon_illum=moon_illum
         )
+
 
