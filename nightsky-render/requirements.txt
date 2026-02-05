@@ -5,3 +5,4 @@ gunicorn==23.0.0
 skyfield
 pytz
 requests
+numpy
