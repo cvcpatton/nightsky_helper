@@ -1,4 +1,4 @@
 flask
 flask-cors
 flask-sqlalchemy
-gunicorn
+gunicorn==23.0.0
