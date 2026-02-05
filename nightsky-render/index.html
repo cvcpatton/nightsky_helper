@@ -15,31 +15,48 @@
       <button type="submit">Check the Sky</button>
     </form>
 
-    <script>
+    <div class="footer">
+      <a href="https://github.com/cvcpatton" target="_blank">By Cathy Patton (GitHub link)</a>
+    </div>
+  </div>
+
+  <script>
+    // Wait until DOM is loaded
+    document.addEventListener("DOMContentLoaded", () => {
       const form = document.getElementById("observationForm");
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault(); // prevent default form submission
 
         const obsDate = document.getElementById("obsDate").value;
+        if (!obsDate) {
+          alert("Please select a date.");
+          return;
+        }
 
-        // Call your Render API
-        const response = await fetch(
-          `https://nightsky-helper.onrender.com/api/observations?date=${obsDate}`
-        );
-        const data = await response.json();
+        try {
+          // Call Render API
+          const response = await fetch(
+            `https://nightsky-helper.onrender.com/api/observations?date=${obsDate}`
+          );
 
-        // Save result in localStorage to pass to results.html
-        localStorage.setItem("latestObservation", JSON.stringify(data));
+          if (!response.ok) {
+            throw new Error(`API returned status ${response.status}`);
+          }
 
-        // Redirect to results.html
-        window.location.href = "results.html";
+          const data = await response.json();
+
+          // Save result in localStorage to pass to results.html
+          localStorage.setItem("latestObservation", JSON.stringify(data));
+
+          // Redirect to results.html
+          window.location.href = "results.html";
+        } catch (err) {
+          console.error(err);
+          alert("Failed to fetch observation. Check console for details.");
+        }
       });
-    </script>
-
-    <div class="footer">
-      <a href="https://github.com/cvcpatton" target="_blank">By Cathy Patton (GitHub link)</a>
-    </div>
-  </div>
+    });
+  </script>
 </body>
 </html>
