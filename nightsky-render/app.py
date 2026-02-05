@@ -1,7 +1,7 @@
 # app.py - Flask API for NightSky Helper
-
 from flask import Flask, request, jsonify
 from sky_calculator import SkyCalculator
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -13,19 +13,24 @@ def index():
 @app.route("/api/observations")
 def get_observation():
     """
-    Accepts a date parameter, calculates the sky observation for that date,
+    Accepts a 'date' query parameter in YYYY-MM-DD format,
+    calculates the sky observation for that date,
     and returns it as JSON.
     Example: /api/observations?date=2026-02-05
     """
-    obs_date = request.args.get("date")
-    if not obs_date:
+    obs_date_str = request.args.get("date")
+    if not obs_date_str:
         return jsonify({"error": "No date provided"}), 400
 
     try:
+        # Convert string to datetime.date
+        obs_date = datetime.strptime(obs_date_str, "%Y-%m-%d").date()
+
+        # Calculate observation
         calculator = SkyCalculator()
         observation = calculator.calculate(obs_date)  # Returns Observation object
 
-        # Convert Observation object to dict
+        # Convert Observation object to dict for JSON
         obs_dict = {
             "date": observation.date,
             "sunset": observation.sunset,
@@ -35,10 +40,6 @@ def get_observation():
             "stars": observation.stars,
             "moon_illum": getattr(observation, "moon_illum", "N/A")
         }
-
-        # Optional: save observation to file if you want persistence
-        # from output import save_observations
-        # save_observations([observation])
 
         return jsonify(obs_dict)
 
