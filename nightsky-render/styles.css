@@ -29,8 +29,11 @@ h1, h2 {
   margin-top: 0;
 }
 
-a {
-  color: #f4f3ee;      
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: #f4f3ee;     
 }
 
 label {
