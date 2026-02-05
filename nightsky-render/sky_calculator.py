@@ -26,7 +26,7 @@ class SkyCalculator:
         observer_loc = self.eph['earth'] + self.observer.topos
 
         # Local noon in Denver
-        local_noon = self.tz.localize(datetime(obs_date.year, obs_date.month, obs_date.day, 12))
+        local_noon = self.tz.localize(datetime(obs_date.year, obs_date.month, obs_date.day, 12), is_dst=None)
 
         # Two-day interval for dark_twilight_day
         t0 = self.ts.utc(local_noon.astimezone(pytz.utc))
@@ -61,7 +61,7 @@ class SkyCalculator:
         )
 
         # Local 10 PM for checking visibility
-        local_night = self.tz.localize(datetime(obs_date.year, obs_date.month, obs_date.day, 22))
+        local_night = self.tz.localize(datetime(obs_date.year, obs_date.month, obs_date.day, 22), is_dst=None)
         t_night = self.ts.utc(local_night.astimezone(pytz.utc))
 
         # Determine visible planets at 10 PM
@@ -90,3 +90,4 @@ class SkyCalculator:
             stars=visible_stars,
             moon_illum=moon_illum
         )
+
