@@ -19,80 +19,71 @@ class SkyCalculator:
         self.tz = DENVER.tz
         self.observer = DENVER
 
-    def calculate(self, obs_date: datetime.date) -> Observation:
-        # Use Skyfield library to calculate visible planets and stars
+def calculate(self, obs_date: datetime.date) -> Observation:
+    observer_loc = self.eph['earth'] + self.observer.topos
 
-        observer_loc = self.eph['earth'] + self.observer.topos
+    # Local noon in Denver (DST aware)
+    local_noon = datetime(obs_date.year, obs_date.month, obs_date.day, 12)
+    local_noon = self.tz.localize(local_noon)
 
-        # Set up two time points for event search: noon of the observation day and 2 days later, explicitly localize to Denver time first
-        local_noon = self.tz.localize(
-            datetime(obs_date.year, obs_date.month, obs_date.day, 12)
-        )
+    # Convert to UTC components for Skyfield
+    utc_noon = local_noon.astimezone(pytz.utc)
+    t0 = self.ts.utc(
+        utc_noon.year, utc_noon.month, utc_noon.day,
+        utc_noon.hour, utc_noon.minute, utc_noon.second
+    )
+    t1_local = local_noon + timedelta(days=2)
+    t1_utc = t1_local.astimezone(pytz.utc)
+    t1 = self.ts.utc(
+        t1_utc.year, t1_utc.month, t1_utc.day,
+        t1_utc.hour, t1_utc.minute, t1_utc.second
+    )
 
-        t0 = self.ts.utc(local_noon.astimezone(pytz.utc))
-        t1 = self.ts.utc((local_noon + timedelta(days=2)).astimezone(pytz.utc))
+    # Dark twilight events
+    f = dark_twilight_day(self.eph, self.observer.topos)
+    times, events = find_discrete(t0, t1, f)
 
-        # Use Skyfield's dark_twilight_day() function to find sunset, darkness, and sunrise events
-        f = dark_twilight_day(self.eph, self.observer.topos)
-        times, events = find_discrete(t0, t1, f)
+    # Convert Skyfield UTC times back to Denver local time
+    event_log = [(e, t.utc_datetime().replace(tzinfo=pytz.utc).astimezone(self.tz))
+                 for t, e in zip(times, events)]
 
-        # Create a list of (event_type, local_time) tuples for easier filtering
-        event_log = [
-            (
-                e,
-                self.tz.normalize(
-                    t.utc_datetime()
-                     .replace(tzinfo=pytz.utc)
-                     .astimezone(self.tz)
-                )
-            )
-            for t, e in zip(times, events)
-        ]
+    sunset = next((lt for e, lt in reversed(event_log) if e == 1 and lt.date() == obs_date), None)
+    dark_start = next((lt for e, lt in event_log if e == 0 and sunset and lt > sunset and lt.date() == obs_date), None)
+    sunrise = next((lt for e, lt in event_log if e == 3 and lt.date() == obs_date + timedelta(days=1)), None)
 
-        # Identify sunset, dark_sky, and sunrise on the observation date
-        sunset = next((lt for e, lt in reversed(event_log) if e == 1 and lt.date() == obs_date), None)
-        dark_start = next((lt for e, lt in event_log if e == 0 and sunset and lt > sunset and lt.date() == obs_date), None)
-        sunrise = next((lt for e, lt in event_log if e == 3 and lt.date() == obs_date + timedelta(days=1)), None)
+    # 10 PM local time for visibility
+    local_night = datetime(obs_date.year, obs_date.month, obs_date.day, 22)
+    local_night = self.tz.localize(local_night)
+    night_utc = local_night.astimezone(pytz.utc)
+    t_night = self.ts.utc(
+        night_utc.year, night_utc.month, night_utc.day,
+        night_utc.hour, night_utc.minute, night_utc.second
+    )
 
-        # Define the time for checking visibility: 10:00 PM local time on the observation date
-        local_night = self.tz.localize(
-            datetime(obs_date.year, obs_date.month, obs_date.day, 22)
-        )
+    # Visible planets
+    visible_planets = [
+        name for name in CELESTIAL_OBJECTS['planets']
+        if (eph_name := PLANET_MAP.get(name)) and eph_name in self.eph
+        and observer_loc.at(t_night).observe(self.eph[eph_name]).apparent().altaz()[0].degrees > 0
+    ]
 
-        t_night = self.ts.utc(local_night.astimezone(pytz.utc))
+    # Visible stars
+    visible_stars = [
+        name for name in CELESTIAL_OBJECTS['stars']
+        if (star := STAR_COORDS.get(name)) and
+        observer_loc.at(t_night).observe(star).apparent().altaz()[0].degrees > 0
+    ]
 
-        # Determine which planets are visible above the horizon at 10 PM
-        visible_planets = [
-            name for name in CELESTIAL_OBJECTS['planets']
-            if (eph_name := PLANET_MAP.get(name)) and eph_name in self.eph
-            and observer_loc.at(t_night).observe(self.eph[eph_name]).apparent().altaz()[0].degrees > 0
-        ]
+    # Moon illumination
+    moon_illum = get_moon_illumination(obs_date)
 
-        # Determine which stars are visible above the horizon at 10 PM
-        visible_stars = [
-            name for name in CELESTIAL_OBJECTS['stars']
-            if (star := STAR_COORDS.get(name)) and
-            observer_loc.at(t_night).observe(star).apparent().altaz()[0].degrees > 0
-        ]
-
-        # New feature: added moon illumination data via web scraping
-        moon_illum = get_moon_illumination(obs_date)
-
-        # Return all relevant stargazing data
-        return Observation(
-            date=obs_date.isoformat(),
-            sunset=format_time(sunset),
-            dark_sky=format_time(dark_start),
-            sunrise=format_time(sunrise),
-            planets=visible_planets,
-            stars=visible_stars,
-            moon_illum=moon_illum
-
-        )
-
-
-
-
-
-
-
+    # Return observation
+    return Observation(
+        date=obs_date.isoformat(),
+        sunset=format_time(sunset),
+        dark_sky=format_time(dark_start),
+        sunrise=format_time(sunrise),
+        planets=visible_planets,
+        stars=visible_stars,
+        moon_illum=moon_illum
+    )
