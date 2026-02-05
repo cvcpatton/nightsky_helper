@@ -10,12 +10,35 @@
     <h1>NightSky Helper</h1>
     <p>Choose a date to see stargazing conditions.</p>
 
-    <form method="POST" action="results">
-      <label for="date">Observation Date</label>
-      <input type="date" id="date" name="date" required>
+<form id="observationForm">
+  <input type="date" id="obsDate" name="obsDate" required>
+  <button type="submit">Check the Sky</button>
+</form>
 
       <button type="submit">Check the Sky</button>
     </form>
+
+    <script>
+const form = document.getElementById("observationForm");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault(); // prevent default static form submit
+
+  const obsDate = document.getElementById("obsDate").value;
+
+  // Call your Render API
+  const response = await fetch(
+    `https://nightsky-helper.onrender.com/api/observations?date=${obsDate}`
+  );
+  const data = await response.json();
+
+  // Save result in localStorage to pass to results.html
+  localStorage.setItem("latestObservation", JSON.stringify(data));
+
+  // Redirect to results.html
+  window.location.href = "results.html";
+});
+</script>
 
     <div class="footer">
       <a href="https://github.com/cvcpatton" target="new">By Cathy Patton (GitHub link)</a>
