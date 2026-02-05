@@ -29,6 +29,10 @@ h1, h2 {
   margin-top: 0;
 }
 
+a {
+  color: inherit;       /* inherit from parent (body) */
+}
+
 label {
   display: block;
   margin-bottom: 0.5rem;
