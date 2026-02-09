@@ -3,6 +3,7 @@ flask-cors
 flask-sqlalchemy
 gunicorn==23.0.0
 skyfield
+astral>=3.2
 pytz
 requests
 numpy
