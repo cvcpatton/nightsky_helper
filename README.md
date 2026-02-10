@@ -7,7 +7,12 @@ Python program using Skyfield (library) to calculate stargazing times and visibl
 * Python  
 * Skyfield library  
 * Data structures: Dictionaries, Lists  
-* File I/O: CSV  
+* File I/O: CSV
+
+Live Demo, added:
+* Backend: Flask, SQLAlchemy
+* Frontend: HTML5, CSS3, Bootstrap 5 (Jinja templates), Render
+* Database: SQLite
 
 **Features**  
 
@@ -19,8 +24,11 @@ Python program using Skyfield (library) to calculate stargazing times and visibl
 
 **Versions**  
 
-* Basic version to run the program in console, available now (Oct 2025) ⬅️
+* Basic version to run the program in console, available now (Oct 2025) 
 * Full version using OOP and web scraping moon phases (Dec 2025)
+
+**Live Demo 🚀** 
+[Denver Nightsky Helper - Live Demo](https://cvcpatton.github.io/nightsky_helper/loading.html) (Hosted on Render)
 
 **Potential Upgrades**  
 
@@ -50,6 +58,6 @@ python nightsky-basic.py
 "Advanced" version instructions are in the README file in the nightsky-oop folder. 
 
 **License**  
-MIT License, Copyright (c) 2025 Catherine Patton  
+MIT License, Copyright (c) 2026 Catherine Patton  
 
 This project was created as part of my programming coursework. Please do not reproduce or distribute without proper credit. For questions about use, contact me.
