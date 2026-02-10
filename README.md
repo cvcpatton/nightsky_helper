@@ -1,4 +1,4 @@
-# Denver Nightsky Helper (Python, December 2025)
+# Denver Nightsky Helper 🌙 (Python, December 2025)
 Python program using Skyfield (library) to calculate stargazing times and visible celestial objects with CSV export for the Denver area.  
 
 
@@ -27,8 +27,8 @@ Live Demo, added:
 * Basic version to run the program in console, available now (Oct 2025) 
 * Full version using OOP and web scraping moon phases (Dec 2025)
 
-**Live Demo 🚀** 
-[Denver Nightsky Helper - Live Demo](https://cvcpatton.github.io/nightsky_helper/loading.html) (Hosted on Render)
+**Live Demo 🚀**  
+[Denver Nightsky Helper - Live Demo](https://cvcpatton.github.io/nightsky_helper/loading.html) (Hosted on Render) ✨ ⬅️⬅️⬅️
 
 **Potential Upgrades**  
 
