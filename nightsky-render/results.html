@@ -55,6 +55,11 @@
       <!-- Observation details will be inserted here by JS -->
     </div>
 
+  <p class="moon-note"><i>
+    If Moon Illumination is 26–49%, it may affect stargazing visibility.<br>
+    If Moon Illumination is 50% or greater, the moon's brightness could interfere with stargazing.</i>
+  </p>
+
     <form action="index.html" method="GET">
       <button type="submit">Check Another Date</button>
     </form>
@@ -74,7 +79,6 @@
     return;
   }
 
-  // obs is a single object now
   container.innerHTML = `
     <h2>Observation for ${obs.date}</h2>
     <p><strong>Sunset:</strong> ${obs.sunset}</p>
